@@ -51,7 +51,12 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        index = self._hash_mod(key)
+
+        if self.storage[index] is not None:
+            print("error: key in use")
+        else:
+            self.storage[index] = LinkedPair(key, value)
 
 
 
@@ -74,7 +79,9 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        index = self._hash_mod(key)
+
+        return self.storage[index]
 
 
     def resize(self):
@@ -84,7 +91,12 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        old_storage = self.storage.copy()
+        self.capacity *= 2
+        self.storage = [None]*self.capacity
+
+        for bucket_item in old_storage:
+            self.insert(bucket_item.key, bucket_item.value)
 
 
 
