@@ -56,7 +56,7 @@ class HashTable:
         if self.storage[index] is not None:
             print("error: key in use")
         else:
-            self.storage[key] = value
+            self.storage[index] = LinkedPair(key, value)
 
 
 
@@ -79,7 +79,7 @@ class HashTable:
 
         Fill this in.
         '''
-        index - self._hash_mod(key)
+        index = self._hash_mod(key)
 
         return self.storage[index]
 
@@ -93,7 +93,7 @@ class HashTable:
         '''
         old_storage = self.storage.copy()
         self.capacity *= 2
-        self.storage = [None]*capacity
+        self.storage = [None]*self.capacity
 
         for bucket_item in old_storage:
             self.insert(bucket_item.key, bucket_item.value)
