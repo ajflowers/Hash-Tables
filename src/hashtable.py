@@ -136,28 +136,27 @@ class HashTable:
           
 
 
-    # def resize(self):
-    #     '''
-    #     Doubles the capacity of the hash table and
-    #     rehash all key/value pairs.
+    def resize(self):
+        '''
+        Doubles the capacity of the hash table and
+        rehash all key/value pairs.
 
-    #     Fill this in.
-    #     '''
-    #     old_storage = self.storage.copy()
-    #     self.capacity *= 2
-    #     self.storage = [None]*self.capacity
+        Fill this in.
+        '''
+        old_storage = self.storage.copy()
+        self.capacity *= 2
+        self.storage = [None]*self.capacity
 
-    #     for bucket_item in old_storage:
-    #         self.insert(bucket_item.key, bucket_item.value)
+        for bucket_item in old_storage:
+            while bucket_item is not None:
+                self.insert(bucket_item.key, bucket_item.value)
+                bucket_item = bucket_item.next
+            
 
 
 
 if __name__ == "__main__":
     ht = HashTable(2)
-
-    ht.insert("line_1", "Tiny hash table")
-    ht.insert("line_2", "Filled beyond capacity")
-    ht.insert("line_3", "Linked list saves the day!")
 
     print("")
 
