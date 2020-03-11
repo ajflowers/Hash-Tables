@@ -83,20 +83,33 @@ class HashTable:
         Fill this in.
         '''
         index = self._hash_mod(key)
+        node = self.storage[index]
+  
+            
+        while True:
+            if node is None:
+                print(f"error: key {key} not found")
+                break
+            elif node.key == key:
+                node.value = None
+                break
+            else:
+                node = node.next
 
-        if self.storage[index] is None:
-            print(f"error: key {key} not found")
-        elif self.storage[index].key == key:
-            node = self.storage[index]
-            self.storage[index] = node.next
-        else:
-            node = self.storage[index]
-            while node.next is not None:
-                if node.next.key == key:
-                    node.next = node.next.next
-                    break
-                else:
-                    node = node.next
+
+        # if self.storage[index] is None:
+        #     print(f"error: key {key} not found")
+        # elif self.storage[index].key == key:
+        #     node = self.storage[index]
+        #     self.storage[index] = node.next
+        # else:
+        #     node = self.storage[index]
+        #     while node.next is not None:
+        #         if node.next.key == key:
+        #             node.next = node.next.next
+        #             break
+        #         else:
+        #             node = node.next
         
             
 
