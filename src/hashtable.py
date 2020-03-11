@@ -53,11 +53,25 @@ class HashTable:
         '''
         index = self._hash_mod(key)
 
-        if self.storage[index] is not None:
-            print("error: key in use")
-        else:
+        if self.storage[index] is None:
             self.storage[index] = LinkedPair(key, value)
+        else:
+            node = self.storage[index]
+            while True:
+                if node.key == key:
+                    node.value = value
+                    break
+                elif node.next is None:
+                    node.next = LinkedPair(key, value)
+                    break
+                else:
+                    node = node.next
 
+
+    def _insert_node(self, node):
+        self.insert(node.key, node.value)
+        if node.next is not None:
+            self._insert_node(node.next)
 
 
     def remove(self, key):
@@ -68,7 +82,23 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        index = self._hash_mod(key)
+
+        if self.storage[index] is None:
+            print(f"error: key {key} not found")
+        elif self.storage[index].key == key:
+            node = self.storage[index]
+            self.storage[index] = node.next
+        else:
+            node = self.storage[index]
+            while node.next is not None:
+                if node.next.key == key:
+                    node.next = node.next.next
+                    break
+                else:
+                    node = node.next
+        
+            
 
 
     def retrieve(self, key):
@@ -81,22 +111,31 @@ class HashTable:
         '''
         index = self._hash_mod(key)
 
-        return self.storage[index]
+        node = self.storage[index]
+        
+        while True:
+            if node is None:
+                return None
+            elif node.key == key:
+                return node.value
+            else:
+                node = node.next
+          
 
 
-    def resize(self):
-        '''
-        Doubles the capacity of the hash table and
-        rehash all key/value pairs.
+    # def resize(self):
+    #     '''
+    #     Doubles the capacity of the hash table and
+    #     rehash all key/value pairs.
 
-        Fill this in.
-        '''
-        old_storage = self.storage.copy()
-        self.capacity *= 2
-        self.storage = [None]*self.capacity
+    #     Fill this in.
+    #     '''
+    #     old_storage = self.storage.copy()
+    #     self.capacity *= 2
+    #     self.storage = [None]*self.capacity
 
-        for bucket_item in old_storage:
-            self.insert(bucket_item.key, bucket_item.value)
+    #     for bucket_item in old_storage:
+    #         self.insert(bucket_item.key, bucket_item.value)
 
 
 
